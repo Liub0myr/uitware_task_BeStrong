@@ -18,7 +18,7 @@ provider "azurerm" {
   # skip_provider_registration = true       # Legacy. Replaced by resource_provider_registrations
   resource_provider_registrations = "core" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#resource-provider-registrations
   #subscription_id                 = var.sub_ID
-  use_oidc                        = true
+  #use_oidc                        = true
 }
 
 # === test ===

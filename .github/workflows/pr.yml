@@ -24,10 +24,9 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      # Download repository code
       - name: Checkout
         uses: actions/checkout@v4
-        #with:
-        #  token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -42,9 +41,7 @@ jobs:
       - name: Terraform Init
         id: init
         env:
-          # ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          # ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
 
 
@@ -53,18 +50,14 @@ jobs:
         id: validate
         if: '!cancelled()'
         env:
-          # ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          # ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform validate -no-color
 
       # Run a Terraform plan
       - name: Terraform plan
         id: plan
         env:
-          # ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          # ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform plan -no-color
 
       # Add a comment to pull requests with plan results

@@ -23,6 +23,6 @@ provider "azurerm" {
 
 # === test ===
 resource "azurerm_resource_group" "BeStrong" {
-  name     = "testGitHubActionsAuth"
+name     = "testGitHubActionsAuth"
   location = "uksouth"
 }

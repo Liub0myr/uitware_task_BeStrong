@@ -14,7 +14,7 @@ resource "azurerm_linux_web_app" "appsvc" {
   location                  = azurerm_resource_group.BeStrong.location
   resource_group_name       = azurerm_resource_group.BeStrong.name
   service_plan_id           = azurerm_service_plan.svcplan.id
-  virtual_network_subnet_id = azurerm_subnet.subnet.id
+  virtual_network_subnet_id = azurerm_subnet.subnet.id                # VNet integration
   site_config {
     always_on = false
   }

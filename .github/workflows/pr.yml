@@ -5,18 +5,17 @@ on:
     branches:
       - main
 
-permissions:
-      id-token: write
-      issues: write
-      pull-requests: write
-      contents: read
+
 
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
+      issues: write
       pull-requests: write
+      contents: read
     steps:
       - name: Azure login
         uses: azure/login@v2
@@ -27,8 +26,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+        #with:
+        #  token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

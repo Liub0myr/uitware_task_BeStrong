@@ -1,4 +1,4 @@
-variable "sub_ID" {
-  description = "Subscription ID"
-  type        = string
-}
+# variable "sub_ID" {
+#   description = "Subscription ID"
+#   type        = string
+# }

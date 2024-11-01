@@ -16,6 +16,7 @@ jobs:
       issues: write
       pull-requests: write
       contents: read
+    steps:
       - name: Download repository
         uses: actions/checkout@v4
 
@@ -27,9 +28,9 @@ jobs:
       - name: Terraform Init
         id: init
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
-          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform init
 
       - name: Terraform format
@@ -38,16 +39,19 @@ jobs:
 
       - name: Terraform validate
         id: validate
-        if: '!cancelled()'
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: terraform validate -no-color
 
       - name: Terraform plan
         id: plan
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        run: terraform plan -no-color -input=flase
+        run: terraform plan -no-color -input=false
 
       # Add a comment to pull requests with plan results
       - name: Add Plan Comment
@@ -61,12 +65,18 @@ jobs:
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+            #### Terraform Validation 🤖 \`${{ steps.validate.outcome }}\`
+            <details><summary>Details</summary>
+            
+            \`\`\`${{ steps.validate.outputs.stdout }}\`\`\`
+            
+            </details>
+            ${{ steps.validate.outputs.stdout }}
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
         
             <details><summary>Show Plan</summary>
             
-            \`\`\`${process.env.PLAN}\`\`\`
+            \`\`\`${{ env.PLAN }}\`\`\`
             
             </details>
             

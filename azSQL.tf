@@ -18,9 +18,8 @@ resource "azurerm_mssql_database" "AzureSQL_DB" {
   sku_name                    = join("", ["GP_S_Gen5_", tostring(var.BeStrong_azSQL_vCPU_max)])
   min_capacity                = var.BeStrong_azSQL_vCPU_min
   auto_pause_delay_in_minutes = var.BeStrong_azSQL_vCPU_pause_delay
-  # enclave_type = "VBS"
 
-  lifecycle { # var.BeStrong_azSQL_prevent_destroy
+  lifecycle {
     prevent_destroy = false
   }
 }

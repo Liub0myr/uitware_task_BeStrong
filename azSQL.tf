@@ -1,6 +1,6 @@
 # === MS SQL Server DB with Private Endpoint ===
 resource "azurerm_mssql_server" "AzureSQL_Server" {
-  name                          = "bestrong-az-sql-srv"
+  name                          = "bestrong-az-sql-srv3"
   location                      = azurerm_resource_group.BeStrong.location
   resource_group_name           = azurerm_resource_group.BeStrong.name
   version                       = "12.0"

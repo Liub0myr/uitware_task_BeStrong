@@ -12,6 +12,7 @@ terraform {
     storage_account_name = "liubfiles"
     container_name       = "bestrong-tfstate"
     key                  = "terraform.tfstate"
+    use_oidc             = true
   }
 }
 provider "azurerm" {
@@ -23,6 +24,7 @@ provider "azurerm" {
   }
   # skip_provider_registration = true      # Legacy. Replaced by resource_provider_registrations
   resource_provider_registrations = "core" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#resource-provider-registrations
+  use_oidc                        = true
 }
 
 resource "azurerm_resource_group" "BeStrong" {

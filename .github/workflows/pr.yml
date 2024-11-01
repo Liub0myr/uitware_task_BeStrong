@@ -28,9 +28,9 @@ jobs:
       - name: Terraform Init
         id: init
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
-          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform init
 
       - name: Terraform format
@@ -41,12 +41,16 @@ jobs:
         id: validate
         if: '!cancelled()'
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: terraform validate -no-color
 
       - name: Terraform plan
         id: plan
         env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: terraform plan -no-color -input=flase
 

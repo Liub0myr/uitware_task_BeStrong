@@ -42,6 +42,8 @@ jobs:
         id: init
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
+          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform init
 
 
@@ -51,6 +53,8 @@ jobs:
         if: '!cancelled()'
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
+          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform validate -no-color
 
       # Run a Terraform plan
@@ -58,6 +62,8 @@ jobs:
         id: plan
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
+          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform plan -no-color
 
       # Add a comment to pull requests with plan results

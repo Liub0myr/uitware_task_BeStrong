@@ -30,4 +30,4 @@ provider "azurerm" {
 resource "azurerm_resource_group" "BeStrong" {
   name     = var.BeStrong_group_name
   location = var.BeStrong_group_location
-}#
+}

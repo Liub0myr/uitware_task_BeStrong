@@ -16,16 +16,7 @@ jobs:
       issues: write
       pull-requests: write
       contents: read
-    steps:
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Download repository code
-      - name: Checkout
+      - name: Download repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
@@ -41,32 +32,26 @@ jobs:
           TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform init
 
-      # Run a Terraform fmt
       - name: Terraform format
         id: fmt
         run: terraform fmt -check
 
-      # Run a Terraform validate
       - name: Terraform validate
         id: validate
         if: '!cancelled()'
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
-          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform validate -no-color
 
-      # Run a Terraform plan
       - name: Terraform plan
         id: plan
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
-          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
-        run: terraform plan -no-color
+        run: terraform plan -no-color -input=flase
 
       # Add a comment to pull requests with plan results
       - name: Add Plan Comment
+        if: '!cancelled()'
         id: comment
         uses: actions/github-script@v6
         env:

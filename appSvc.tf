@@ -10,7 +10,7 @@ resource "azurerm_service_plan" "svcplan" {
 }
 
 resource "azurerm_linux_web_app" "appsvc" {
-  name                      = "BeStrong-appservice-webapp2"
+  name                      = "BeStrong-appservice-webapp3"
   location                  = azurerm_resource_group.BeStrong.location
   resource_group_name       = azurerm_resource_group.BeStrong.name
   service_plan_id           = azurerm_service_plan.svcplan.id

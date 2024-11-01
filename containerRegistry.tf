@@ -8,7 +8,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_role_assignment" "appsvc_acr_pull" {
-  principal_id = azurerm_linux_web_app.appsvc.identity[0].principal_id
+  principal_id         = azurerm_linux_web_app.appsvc.identity[0].principal_id
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id
   depends_on           = [azurerm_linux_web_app.appsvc]

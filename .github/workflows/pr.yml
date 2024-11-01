@@ -51,6 +51,8 @@ jobs:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_BeStrong_azSQL_login: ${{ secrets.BESTRONG_AZSQL_LOGIN }}
+          TF_VAR_BeStrong_azSQL_password: ${{ secrets.BESTRONG_AZSQL_PASSWORD }}
         run: terraform plan -no-color -input=false
 
       # Add a comment to pull requests with plan results
@@ -63,15 +65,16 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            const output = `#### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Validation 🤖 \`${{ steps.validate.outcome }}\`
+
             <details><summary>Details</summary>
             
             \`\`\`${{ steps.validate.outputs.stdout }}\`\`\`
             
             </details>
-            ${{ steps.validate.outputs.stdout }}
+            
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
         
             <details><summary>Show Plan</summary>

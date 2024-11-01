@@ -1,5 +1,5 @@
 terraform {
-required_providers {
+  required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "4.7.0"
@@ -30,4 +30,4 @@ provider "azurerm" {
 resource "azurerm_resource_group" "BeStrong" {
   name     = var.BeStrong_group_name
   location = var.BeStrong_group_location
-}#
+}

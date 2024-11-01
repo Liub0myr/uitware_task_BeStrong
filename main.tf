@@ -25,3 +25,7 @@ provider "azurerm" {
   resource_provider_registrations = "core" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#resource-provider-registrations
 }
 
+resource "azurerm_resource_group" "BeStrong" {
+  name     = var.BeStrong_group_name
+  location = var.BeStrong_group_location
+}

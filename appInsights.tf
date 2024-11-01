@@ -6,7 +6,3 @@ resource "azurerm_application_insights" "appinsights" {
   application_type    = "web"
 }
 
-resource "azurerm_resource_group" "BeStrong" {
-  name     = var.BeStrong_group_name
-  location = var.BeStrong_group_location
-}

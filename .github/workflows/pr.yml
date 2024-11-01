@@ -16,6 +16,7 @@ jobs:
       issues: write
       pull-requests: write
       contents: read
+    steps:
       - name: Download repository
         uses: actions/checkout@v4
 

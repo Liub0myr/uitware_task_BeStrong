@@ -1,7 +1,3 @@
-terraform test
-c52ef17
-main.tf
-@@ -0,0 +1,27 @@
 terraform {
   required_providers {
     azurerm = {
